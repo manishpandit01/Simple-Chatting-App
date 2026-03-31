@@ -1,4 +1,4 @@
-from mailbox import Message
+from chat_app.models import Message
 
 from django.contrib import admin
 
