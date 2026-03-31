@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        {% for chat in chats %}
+        <div class="chat">
+            <div class="name"><h1>{{chat.sender}}</h1>
+            </div>
+            <!-- <h1>
+                <a href="#" class="text-decoration-none fst-italic">{{post.title}}</a>
+            </h1> -->
+            <div class="date"><h3>{{chat.created_at|time:"H:i"}}</h3></div>
+            <p>
+                {{chat.message}}
+                
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
