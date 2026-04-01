@@ -17,3 +17,13 @@ def chat_delete(request,id):
     chat=get_object_or_404(Message,id=id)
     chat.delete()
     return redirect('chat-list')
+
+def chat_create(request):
+    if request.method=="POST":
+        sender="Manish"
+        message_text=request.POST.get("message")
+        
+        if message_text:
+            Message.objects.create(sender=sender,message=message_text)
+    return redirect('chat-list')
+        
