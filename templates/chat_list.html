@@ -1,22 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col">
-        {% for chat in chats %}
-        <div class="chat">
-            <div class="name"><h1>{{chat.sender}}</h1>
-            </div>
-            <!-- <h1>
-                <a href="#" class="text-decoration-none fst-italic">{{post.title}}</a>
-            </h1> -->
-            <div class="date"><h3>{{chat.created_at|time:"H:i"}}</h3></div>
-            <p>
-                {{chat.message}}
-                
-            </p>
+<div class="chat-container" style="max-height:400px; overflow-y:auto">
+    {% for chat in chats %}
+    <div class="d-flex justify-content-end mb-2">
+        <div class="p-2 rounded bg-primary text-white" style="max-width:70%;">
+
+            <div class="fw-bold small">{{chat.sender}}</div>
+
+            <div>{{chat.message}}</div>
+
+            <div class="text-end text-muted small">{{chat.created_at|time:"H:i"}}</div>
+            <a href="{% url 'chat-delete' chat.id %}" class="btn btn-sm btn-danger ms-2">Delete</a>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
 </div>
+<form action="" method="post" class="d-flex mt-3">
+    {% csrf_token %}
+    <input type="text" name="message" class="form-control me-2" placeholder="Enter your message......" required>
+    <button type="submit" class="btn btn-success">Send</button>
+</form>
 {% endblock content %}
