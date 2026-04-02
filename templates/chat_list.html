@@ -1,24 +1,40 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<div class="chat-container" style="max-height: 400px; overflow-y: auto">
+  {% for chat in chats %}
+  <div class="d-flex justify-content-end mb-2">
+    <div class="p-2 rounded bg-primary text-white" style="max-width: 70%">
+      <div class="fw-bold small">{{chat.sender}}</div>
 
-{% block content %}
-<div class="chat-container" style="max-height:400px; overflow-y:auto">
-    {% for chat in chats %}
-    <div class="d-flex justify-content-end mb-2">
-        <div class="p-2 rounded bg-primary text-white" style="max-width:70%;">
+      <div>{{chat.message}}</div>
 
-            <div class="fw-bold small">{{chat.sender}}</div>
+      <div class="text-end text-muted small">
+        {{chat.created_at|time:"H:i"}}
+      </div>
 
-            <div>{{chat.message}}</div>
-
-            <div class="text-end text-muted small">{{chat.created_at|time:"H:i"}}</div>
-            <a href="{% url 'chat-delete' chat.id %}" class="btn btn-sm btn-danger ms-2">Delete</a>
-        </div>
+      <div class="mt-2 text-end">
+        <a href="?edit={{chat.id}}" class="btn btn-sm btn-warning">Edit</a>
+        <a
+          href="{% url 'chat-delete' chat.id %}"
+          class="btn btn-sm btn-danger ms-2"
+          >Delete</a
+        >
+      </div>
     </div>
-    {% endfor %}
+  </div>
+  {% endfor %}
 </div>
-<form action="{% url 'chat-create' %}" method="post" class="d-flex mt-3">
-    {% csrf_token %}
-    <input type="text" name="message" class="form-control me-2" placeholder="Enter your message......" required>
-    <button type="submit" class="btn btn-success">Send</button>
+<form action="{% if edit_chat %}{% url 'chat-update' edit_chat.id %}{% else %}{% url 'chat-create' %}{% endif %}" method="post" class="d-flex mt-3">
+  {% csrf_token %}
+  <input
+    type="text"
+    name="message"
+    class="form-control me-2"
+    placeholder="Enter your message......"
+    value="{% if edit_chat %}{{edit_chat.message}}{% endif %}"
+    required
+  />
+  <button type="submit" class="btn btn-success">
+  {% if edit_chat %}Update{% else %}Send{% endif %}
+  </button>
 </form>
 {% endblock content %}
