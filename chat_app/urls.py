@@ -7,5 +7,5 @@ urlpatterns = [
     path("",views.chat_list,name="chat-list"),
     path('delete/<int:id>/',views.chat_delete,name="chat-delete"),
     path("create/",views.chat_create,name="chat-create"),
-    path("",views.chat_update,name="chat-update")
+    path("update/<int:id>/",views.chat_update,name="chat-update")
 ]

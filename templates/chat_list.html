@@ -15,26 +15,29 @@
         <a href="?edit={{chat.id}}" class="btn btn-sm btn-warning">Edit</a>
         <a
           href="{% url 'chat-delete' chat.id %}"
-          class="btn btn-sm btn-danger ms-2"
-          >Delete</a
-        >
+          class="btn btn-sm btn-danger ms-2">
+          Delete</a>
       </div>
     </div>
   </div>
   {% endfor %}
 </div>
-<form action="{% if edit_chat %}{% url 'chat-update' edit_chat.id %}{% else %}{% url 'chat-create' %}{% endif %}" method="post" class="d-flex mt-3">
+<form
+  action="{% if edit_chat %}{% url 'chat-update' edit_chat.id %}{% else %}{% url 'chat-create' %}{% endif %}"
+  method="post"
+  class="d-flex mt-3"
+>
   {% csrf_token %}
   <input
     type="text"
     name="message"
     class="form-control me-2"
     placeholder="Enter your message......"
-    value="{% if edit_chat %}{{edit_chat.message}}{% endif %}"
+    value="{% if edit_chat %}{{ edit_chat.message }}{% endif %}"
     required
   />
   <button type="submit" class="btn btn-success">
-  {% if edit_chat %}Update{% else %}Send{% endif %}
+    {% if edit_chat %}Update{% else %}Send{% endif %}
   </button>
 </form>
 {% endblock content %}

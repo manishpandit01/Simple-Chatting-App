@@ -7,10 +7,18 @@ from django.shortcuts import render
 # Create your views here.
 def chat_list(request):
     chats=Message.objects.all()
+    edit_id=request.GET.get('edit')
+    edit_chat=None
+    if edit_id:
+        edit_chat=get_object_or_404(Message,id=edit_id)
+    
     return render(
         request,
         "chat_list.html",
-        {"chats":chats}
+        {
+            "chats":chats,
+             "edit_chat":edit_chat
+        }
     )
 
 def chat_delete(request,id):
